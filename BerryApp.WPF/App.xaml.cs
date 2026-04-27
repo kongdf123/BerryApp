@@ -50,8 +50,8 @@ namespace BerryApp.WPF
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            var mainWindow = new MainWindow();
-            mainWindow.DataContext = serviceProvider.GetService<MainViewModel>();
+            var mainWindow = serviceProvider.GetRequiredService<MainWindow>();
+            mainWindow.DataContext = serviceProvider.GetRequiredService<MainViewModel>();
             mainWindow.Show();
         }
 

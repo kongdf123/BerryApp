@@ -3,21 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:BerryApp.WPF" 
              
-             xmlns:views="clr-namespace:BerryApp.WPF.Pages" 
+             xmlns:pages="clr-namespace:BerryApp.WPF.Pages" 
              xmlns:vm="clr-namespace:BerryApp.WPF.ViewModels"
              >
     <!--StartupUri="MainWindow.xaml"-->
     <Application.Resources>
         <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
-            <views:DashboardView></views:DashboardView>
+            <pages:DashboardView></pages:DashboardView>
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type vm:OrdersViewModel}">
-            <views:OrdersView/>
+            <pages:OrdersView/>
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type vm:AlarmsViewModel}">
-            <views:AlarmsView/>
+            <pages:AlarmsView/>
         </DataTemplate>
 
     </Application.Resources>

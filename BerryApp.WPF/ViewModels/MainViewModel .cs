@@ -2,6 +2,7 @@
 using BerryApp.Domain.Entities;
 using BerryApp.Shared.Base;
 using BerryApp.Shared.Services;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -53,10 +54,25 @@ namespace BerryApp.WPF.ViewModels
             //StartMonitoring();
 
             _navSrv = navigationService;
-            
-            ShowDashboardCommand = new RelayCommand(async () => { _navSrv.CurrentView = dashboard; await Task.CompletedTask; });
-            ShowOrdersCommand = new RelayCommand(async () => { _navSrv.CurrentView = orders; await Task.CompletedTask; });
-            ShowAlarmsCommand = new RelayCommand(async () => { _navSrv.CurrentView = alarms; await Task.CompletedTask; });
+            // Subscribe to navigation changes
+            _navSrv.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(NavigationService.CurrentView))
+                    OnPropertyChanged(nameof(CurrentView));
+            };
+
+            ShowDashboardCommand = new RelayCommand(async () => { 
+                _navSrv.CurrentView = dashboard;
+                
+                await Task.CompletedTask; });
+            ShowOrdersCommand = new RelayCommand(async () => {
+                _navSrv.CurrentView = orders; 
+                await Task.CompletedTask; 
+            });
+            ShowAlarmsCommand = new RelayCommand(async () => {
+                _navSrv.CurrentView = alarms; 
+                await Task.CompletedTask; 
+            });
 
             _navSrv.CurrentView = dashboard; // default view
         }
@@ -67,160 +83,160 @@ namespace BerryApp.WPF.ViewModels
             set => _navSrv.CurrentView = value;
         }
 
-        private string _statusMessage = "Idle";
-        public string StatusMessage
-        {
-            get { return _statusMessage; }
-            set
-            {
-                _statusMessage = value;
-                OnPropertyChanged(nameof(StatusMessage));
-            }
-        }
+        //private string _statusMessage = "Idle";
+        //public string StatusMessage
+        //{
+        //    get { return _statusMessage; }
+        //    set
+        //    {
+        //        _statusMessage = value;
+        //        OnPropertyChanged(nameof(StatusMessage));
+        //    }
+        //}
 
-        private double _temperature;
-        public double Temperature
-        {
-            get { return _temperature; }
-            set
-            {
-                _temperature = value;
-                OnPropertyChanged(nameof(Temperature));
-            }
-        }
+        //private double _temperature;
+        //public double Temperature
+        //{
+        //    get { return _temperature; }
+        //    set
+        //    {
+        //        _temperature = value;
+        //        OnPropertyChanged(nameof(Temperature));
+        //    }
+        //}
 
-        private bool _isRunning;
-        private async void StartMonitoring()
-        {
-            _isRunning = true;
-            //while (_isRunning)
-            while (true)
-            {
-                await Task.Delay(1000); // Update every 1 second
+        //private bool _isRunning;
+        //private async void StartMonitoring()
+        //{
+        //    _isRunning = true;
+        //    //while (_isRunning)
+        //    while (true)
+        //    {
+        //        await Task.Delay(1000); // Update every 1 second
 
-                // Simulate receiving telemetry data
-                Temperature = 20 + _random.NextDouble() * 10; // Random temp between 20-30
+        //        // Simulate receiving telemetry data
+        //        Temperature = 20 + _random.NextDouble() * 10; // Random temp between 20-30
 
-                var r = _random.Next(3);
-                StatusMessage = r switch
-                {
-                    0 => "Running",
-                    1 => "Stopped",
-                    _ => "Error"
-                }; //$"Temperature: {Temperature:F1} °C";
+        //        var r = _random.Next(3);
+        //        StatusMessage = r switch
+        //        {
+        //            0 => "Running",
+        //            1 => "Stopped",
+        //            _ => "Error"
+        //        }; //$"Temperature: {Temperature:F1} °C";
 
-                var machine = _machineService.GetMachineData();
+        //        var machine = _machineService.GetMachineData();
 
-                StatusMessage = $"Machine: {machine.Name}, Status: {machine.Status}, Temp: {machine.Temperature:F1} °C";
-                Temperature = machine.Temperature;
-            }
-        }
+        //        StatusMessage = $"Machine: {machine.Name}, Status: {machine.Status}, Temp: {machine.Temperature:F1} °C";
+        //        Temperature = machine.Temperature;
+        //    }
+        //}
 
-        private int _progress;
-        public int Progress
-        {
-            get { return _progress; }
-            set
-            {
-                _progress = value;
-                OnPropertyChanged(nameof(Progress));
-            }
-        }
+        //private int _progress;
+        //public int Progress
+        //{
+        //    get { return _progress; }
+        //    set
+        //    {
+        //        _progress = value;
+        //        OnPropertyChanged(nameof(Progress));
+        //    }
+        //}
 
-        private bool _isLoading;
-        public bool IsLoading
-        {
-            get { return _isLoading; }
-            set
-            {
-                _isLoading = value;
-                OnPropertyChanged(nameof(IsLoading));
-            }
-        }
+        //private bool _isLoading;
+        //public bool IsLoading
+        //{
+        //    get { return _isLoading; }
+        //    set
+        //    {
+        //        _isLoading = value;
+        //        OnPropertyChanged(nameof(IsLoading));
+        //    }
+        //}
 
-        private bool _isCanceled;
-        public bool IsCanceled
-        {
-            get { return _isCanceled; }
-            set
-            {
-                _isCanceled = value;
-                OnPropertyChanged(nameof(IsCanceled));
-            }
-        }
+        //private bool _isCanceled;
+        //public bool IsCanceled
+        //{
+        //    get { return _isCanceled; }
+        //    set
+        //    {
+        //        _isCanceled = value;
+        //        OnPropertyChanged(nameof(IsCanceled));
+        //    }
+        //}
 
-        private Order _selectedOrder;
-        public Order SelectedOrder
-        {
-            get { return _selectedOrder; }
-            set
-            {
-                _selectedOrder = value;
-                OnPropertyChanged(nameof(SelectedOrder));
+        //private Order _selectedOrder;
+        //public Order SelectedOrder
+        //{
+        //    get { return _selectedOrder; }
+        //    set
+        //    {
+        //        _selectedOrder = value;
+        //        OnPropertyChanged(nameof(SelectedOrder));
 
-                // Notify command system to re-query CanExecute
-                DeleteOrderCommand.RaiseCanExecuteChanged();
-            }
-        }
+        //        // Notify command system to re-query CanExecute
+        //        DeleteOrderCommand.RaiseCanExecuteChanged();
+        //    }
+        //}
 
         private string _newOrderName;
         public string NewOrderName
         {
             get { return _newOrderName; }
-            set { _newOrderName = value; OnPropertyChanged(nameof(NewOrderName)); }
+            set { SetProperty(ref _newOrderName, value); }
         }
 
         private int? _newOrderQuantity;
         public int? NewOrderQuantity
         {
             get { return _newOrderQuantity; }
-            set { _newOrderQuantity = value; OnPropertyChanged(nameof(NewOrderQuantity)); }
+            set { SetProperty(ref _newOrderQuantity, value); }
         }
 
-        private bool CanLoad()
-        {
-            return !IsLoading;
-        }
+        //private bool CanLoad()
+        //{
+        //    return !IsLoading;
+        //}
 
-        private async Task CancelAsync()
-        {
-            // Implement cancellation logic if needed
-            IsCanceled = true;
-            RaiseCommand();
-        }
+        //private async Task CancelAsync()
+        //{
+        //    // Implement cancellation logic if needed
+        //    IsCanceled = true;
+        //    RaiseCommand();
+        //}
 
-        private async Task LoadAsync()
-        {
-            if(IsCanceled)
-            {
-                IsLoading = false;
-                IsCanceled = false; // reset for next load
-                RaiseCommand();
-                return;
-            }
+        //private async Task LoadAsync()
+        //{
+        //    if(IsCanceled)
+        //    {
+        //        IsLoading = false;
+        //        IsCanceled = false; // reset for next load
+        //        RaiseCommand();
+        //        return;
+        //    }
 
-            IsLoading = true;
-            Progress = 0;
-            RaiseCommand();
+        //    IsLoading = true;
+        //    Progress = 0;
+        //    RaiseCommand();
 
-            for (int i = 0; i <= 100; i++)
-            {
-                if (IsCanceled)
-                {
-                    IsLoading = false;
-                    IsCanceled = false; // reset for next load
-                    Progress = 0;
-                    RaiseCommand();
-                    return;
-                }
+        //    for (int i = 0; i <= 100; i++)
+        //    {
+        //        if (IsCanceled)
+        //        {
+        //            IsLoading = false;
+        //            IsCanceled = false; // reset for next load
+        //            Progress = 0;
+        //            RaiseCommand();
+        //            return;
+        //        }
 
-                await Task.Delay(50); // simulate work
-                Progress = i;
-            }
+        //        await Task.Delay(50); // simulate work
+        //        Progress = i;
+        //    }
 
-            IsLoading = false;
-            RaiseCommand();
-        }
+        //    IsLoading = false;
+        //    RaiseCommand();
+        //}
 
         private void RaiseCommand()
         {
@@ -239,44 +255,44 @@ namespace BerryApp.WPF.ViewModels
             NewOrderQuantity = null;
         }
 
-        private void DeleteOrder()
-        {
-            if (SelectedOrder != null)
-            {
-                Orders.Remove(SelectedOrder);
-                SelectedOrder = null;
-            }
-        }
+        //private void DeleteOrder()
+        //{
+        //    if (SelectedOrder != null)
+        //    {
+        //        Orders.Remove(SelectedOrder);
+        //        SelectedOrder = null;
+        //    }
+        //}
 
-        private bool CanDeleteOrder()
-        {
-            return SelectedOrder != null;
-        }
+        //private bool CanDeleteOrder()
+        //{
+        //    return SelectedOrder != null;
+        //}
 
         public ICommand SubmitCommand { get; }
         public ICommand ClearCommand { get; }
 
-        public string Name { get { return _name; } set { _name = value; OnPropertyChanged(nameof(Name)); } }
-        public string Age { get => _age; set { _age = value; OnPropertyChanged(nameof(Age)); } }
-        public string Greeting { get { return _greeeting; } set { _greeeting = value; OnPropertyChanged(nameof(Greeting)); } }
+        //public string Name { get { return _name; } set { _name = value; OnPropertyChanged(nameof(Name)); } }
+        //public string Age { get => _age; set { _age = value; OnPropertyChanged(nameof(Age)); } }
+        //public string Greeting { get { return _greeeting; } set { _greeeting = value; OnPropertyChanged(nameof(Greeting)); } }
 
-        private bool CanSubmit() => !string.IsNullOrEmpty(Name);
+        //private bool CanSubmit() => !string.IsNullOrEmpty(Name);
 
-        public void Submit()
-        {
-            Greeting = $"Hello, {Name}, Age:{Age}!";
-        }
+        //public void Submit()
+        //{
+        //    Greeting = $"Hello, {Name}, Age:{Age}!";
+        //}
 
-        public void Clear()
-        {
-            Name = string.Empty;
-            Age = string.Empty;
-        }
+        //public void Clear()
+        //{
+        //    Name = string.Empty;
+        //    Age = string.Empty;
+        //}
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        //public event PropertyChangedEventHandler PropertyChanged;
+        //protected void OnPropertyChanged(string propertyName)
+        //{
+        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        //}
     }
 }

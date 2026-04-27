@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:BerryApp.WPF.Pages"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Margin="20">
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -18,11 +18,11 @@
 
         <!--Input-->
         <StackPanel Orientation="Horizontal" Margin="0,40,0,10">
-            <Label Content="Order Name:"></Label>
+            <Label Content="Product Name:"></Label>
             <TextBox Width="200" Margin="5,0,20,0" Text="{Binding NewProductName}"></TextBox>
             <Label Content="Quantity:"></Label>
-            <TextBox Width="100" Margin="5,0,20,0" Text="{Binding NewOrderQuantity}"></TextBox>
-            <Button Content="Add Order" Command="{Binding AddOrderCommand}"></Button>
+            <TextBox Width="100" Margin="5,0,20,0" Text="{Binding NewQuantity}"></TextBox>
+            <Button Content="Add Order" Command="{Binding AddCommand}"></Button>
         </StackPanel>
 
         <!--DataGrid-->
