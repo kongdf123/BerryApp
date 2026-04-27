@@ -5,6 +5,7 @@ using BerryApp.Infra.Persistence;
 using BerryApp.Shared.Events;
 using BerryApp.Shared.Services;
 using BerryApp.WPF.ViewModels;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
 using System.Data;
@@ -22,6 +23,18 @@ namespace BerryApp.WPF
         public App()
         {
             var services = new ServiceCollection();
+
+            var environment = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT")
+                  ?? "Production";
+            var config = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: false)
+                .AddJsonFile($"appsettings.{environment}.json", optional: true)
+                .Build();
+
+            var connStr = config.GetConnectionString("Default");
+            services.AddSingleton<IAlarmRepository>(x=>new AlarmRepository(connStr));
+            services.AddSingleton<AlarmService>();
 
             services.AddSingleton<EventBus>();
             services.AddSingleton<NavigationService>();

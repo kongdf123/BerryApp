@@ -9,5 +9,6 @@ namespace BerryApp.Shared.Events
     public class AlarmEvent
     {
         public string Message { get; set; }
+        public DateTime Time { get; set; } = DateTime.Now;
     }
 }

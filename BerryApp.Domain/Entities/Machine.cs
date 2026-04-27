@@ -47,4 +47,10 @@ namespace BerryApp.Domain.Entities
             IsRunning = false;
         }
     }
+    public enum MachineStatus
+    {
+        Idle,
+        Running,
+        Error
+    }
 }

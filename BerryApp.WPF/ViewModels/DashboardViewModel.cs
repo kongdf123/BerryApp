@@ -90,11 +90,11 @@ namespace BerryApp.WPF.ViewModels
                     machine.Temperature = Math.Round(20 + _random.NextDouble() * 80, 2); // Random temperature between 20 and 100
                     machine.Status = _random.Next(3) switch { 0 => "Running", 1 => "Stopped", _ => "Error" };
 
-                    if (machine.Temperature > 80)
+                    if (machine.Temperature > Threshold)
                     {
                         // Publish an alert event if temperature exceeds threshold
                         _eventBus.Publish(new AlarmEvent { Message = $"{machine.Name} temperature is too high: {machine.Temperature:F1} °C" });
-                    }
+                    } 
 
                     // 🔥 update each machine series
                     var list = _machineSeriesData[machine.Name];
@@ -102,7 +102,6 @@ namespace BerryApp.WPF.ViewModels
 
                     if (list.Count > 20)
                         list.RemoveAt(0);
-                     
 
                     seriesList.Add(new LineSeries<double>
                     {
