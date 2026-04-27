@@ -140,13 +140,13 @@ This project is designed to evolve toward a **production-grade MES system**:
 
 ## Screenshots
 
-![Main Dashboard](https://github.com/kongdf123/BerryApp/blob/master/Docs/screenshots/dashboard.png)
+![Main Dashboard](Docs/screenshots/Dashboard.png)
 *Real-time machine status and telemetry*
 
-![Main Dashboard](https://github.com/kongdf123/BerryApp/blob/master/Docs/screenshots/orders.png)
+![Main Dashboard](Docs/screenshots/Orders.png)
 *Orders data grid*
 
-![Alarm Panel](https://github.com/kongdf123/BerryApp/blob/master/Docs/screenshots/alarms.png)
+![Alarm Panel](Docs/screenshots/Alarms.png)
 *Event‑driven alarm list*
 
 ---
