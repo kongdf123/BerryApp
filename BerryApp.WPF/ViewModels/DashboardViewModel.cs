@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
+using Microsoft.Extensions.Logging;
+using System.Reflection.PortableExecutable;
+using Machine = BerryApp.Domain.Entities.Machine;
 
 namespace BerryApp.WPF.ViewModels
 {
@@ -19,12 +22,16 @@ namespace BerryApp.WPF.ViewModels
     {
         private readonly EventBus _eventBus;
         private readonly Random _random = new();
+        private readonly ILogger<DashboardViewModel> _logger;
 
         public ObservableCollection<Machine> Machines { get; } = new();
 
-        public DashboardViewModel(EventBus eventBus)
+        public DashboardViewModel(EventBus eventBus, ILogger<DashboardViewModel> logger)
         {
             _eventBus = eventBus;
+            _logger = logger;
+
+            _logger.LogInformation("Dashboard started");
 
             // Initial load of machines
             Machines.Add(new Machine { Id = Guid.NewGuid(), Name = "Machine A", Status = "Running" });
@@ -92,6 +99,8 @@ namespace BerryApp.WPF.ViewModels
 
                     if (machine.Temperature > Threshold)
                     {
+                        _logger.LogWarning("Temperature exceeded threshold: {Temp}", machine.Temperature);
+
                         // Publish an alert event if temperature exceeds threshold
                         _eventBus.Publish(new AlarmEvent { Message = $"{machine.Name} temperature is too high: {machine.Temperature:F1} °C" });
                     } 
