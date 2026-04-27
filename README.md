@@ -138,6 +138,19 @@ This project is designed to evolve toward a **production-grade MES system**:
 
 ---
 
+## Screenshots
+
+![Main Dashboard](docs/screenshots/dashboard.png)
+*Real-time machine status and telemetry*
+
+![Main Dashboard](docs/screenshots/orders.png)
+*Orders data grid*
+
+![Alarm Panel](docs/screenshots/alarms.png)
+*Event‑driven alarm list*
+
+---
+
 ## 🎯 Purpose of This Project
 
 This project demonstrates:
