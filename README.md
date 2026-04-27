@@ -1,7 +1,3 @@
-Here is a thoroughly improved version of your `README.md`.  
-I've fixed formatting, clarified the structure, corrected broken markdown (e.g., escaped characters, inconsistent headings), and made it more GitHub‑friendly while keeping all your original content and tone.
-
-```markdown
 # 🍓 BerryApp MES System
 
 A modern **Manufacturing Execution System (MES)** desktop application built with **WPF (.NET 9)**, designed using **MVVM architecture**, **dependency injection**, and **modular navigation patterns**.
@@ -59,6 +55,8 @@ BerryApp/
 ├── BerryApp.Biz/                 # Application services (use cases)
 ├── BerryApp.Infra/               # Infrastructure (PLC, persistence)
 └── BerryApp.Shared/              # Shared utilities (EventBus, base classes)
+
+
 ```
 
 ---
@@ -167,6 +165,6 @@ MIT License
 
 Contributions, issues, and suggestions are welcome.  
 Feel free to open a Pull Request or Issue.
-```
 
---- 
+---
+
