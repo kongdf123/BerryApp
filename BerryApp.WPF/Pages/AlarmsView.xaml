@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="BerryApp.WPF.Pages.AlarmsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BerryApp.WPF.Pages"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Active Alarms" FontSize="24" FontWeight="Bold" Margin="0,0,0,10"></TextBlock>
+
+        <ListBox Grid.Row="1" ItemsSource="{Binding Alarms}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="Red" BorderThickness="1" Margin="5" Padding="5">
+                        <StackPanel>
+                            <TextBlock Text="{Binding Message}" Foreground="Red" FontWeight="Bold"></TextBlock>
+
+                            <TextBlock Text="{Binding Time}" FontSize="10" Foreground="Gray"></TextBlock>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>
