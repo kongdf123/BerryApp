@@ -11,9 +11,4 @@
     <ProjectReference Include="..\BerryApp.Infra\BerryApp.Infra.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>
